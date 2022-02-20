@@ -1,0 +1,18 @@
+{
+  "screen": {
+    "availWidth": 1920,
+    "availHeight": 1040,
+    "availLeft": 0,
+    "availTop": 0,
+    "width": 1920,
+    "height": 1080,
+    "colorDepth": 24,
+    "pixelDepth": 24
+  },
+  "navigator": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36",
+    "platform": "Win32",
+    "deviceMemory": 2,
+    "hardwareConcurrency": 2
+  }
+}
