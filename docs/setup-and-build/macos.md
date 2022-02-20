@@ -17,11 +17,11 @@ Example:
 
 ## 3. Generate .ninja files.
     
-    cd ./chromium/src
-    gn gen ../out/Default
+    cd ./src
+    gn gen out/Default
 
 # Build
 
-    cd ../
+    cd ./src
     autoninja -C out/Default chrome
 

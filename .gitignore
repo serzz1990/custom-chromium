@@ -1,2 +1,3 @@
-depot_tools
-node_modules
+/depot_tools*/
+/node_modules*/
+.idea

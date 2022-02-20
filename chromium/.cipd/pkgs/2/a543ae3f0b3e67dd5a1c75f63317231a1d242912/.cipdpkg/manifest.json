@@ -1,0 +1,157 @@
+{
+  "format_version": "1.1",
+  "package_name": "chromium/chrome/test/data/safe_browsing/dmg",
+  "install_mode": "copy",
+  "files": [
+    {
+      "name": "data/dmg_UDBZ_GPTSPUD.dmg",
+      "size": 13816,
+      "hash": "2uiB-nJZgTtkkJHUYlM5AuxbJkmc05pHtViVvKp4ocoC"
+    },
+    {
+      "name": "data/dmg_UDBZ_NONE.dmg",
+      "size": 8075,
+      "hash": "UUFBLMD78pkElsslhiVJXygk63v-r5LQ26P8gzVwzJEC"
+    },
+    {
+      "name": "data/dmg_UDBZ_SPUD.dmg",
+      "size": 10454,
+      "hash": "tRrASLHtioTs7o2CLCN34kKCg_UE2nCKHJwAVjHLRwQC"
+    },
+    {
+      "name": "data/dmg_UDCO_GPTSPUD.dmg",
+      "size": 123022,
+      "hash": "AIWmDOdalMEQKnv9hRMMto_8zXBC38iDovr5WzGsXREC"
+    },
+    {
+      "name": "data/dmg_UDCO_NONE.dmg",
+      "size": 116052,
+      "hash": "lsyHE9VC6tLbvwNlZfC8Ziqu60NS-I9Rl5ZHOV53T84C"
+    },
+    {
+      "name": "data/dmg_UDCO_SPUD.dmg",
+      "size": 119797,
+      "hash": "FbfgM4K7Y93Qi7VXvt6EhFKTenrDHnyit3MtrXLVm-IC"
+    },
+    {
+      "name": "data/dmg_UDRO_GPTSPUD.dmg",
+      "size": 139141,
+      "hash": "pdQ9pdSfhccmT1Lefqj2upx5p1qkmU073oTpqjDHLe0C"
+    },
+    {
+      "name": "data/dmg_UDRO_NONE.dmg",
+      "size": 82743,
+      "hash": "u0h5EdtxLKsLFmt_KTLKI3cZ1ASV-1sCurR-aeItaTIC"
+    },
+    {
+      "name": "data/dmg_UDRO_SPUD.dmg",
+      "size": 87017,
+      "hash": "ULbtnq24PFf5_mxUML8dhYbiNqJyMCi-j-f1xDO-sxwC"
+    },
+    {
+      "name": "data/dmg_UDRW_GPTSPUD.dmg",
+      "size": 2471936,
+      "hash": "peJ7WpHBctszk9iXSRLwzBxjJVOUhOt203om2-8M8tUC"
+    },
+    {
+      "name": "data/dmg_UDRW_NONE.dmg",
+      "size": 2435072,
+      "hash": "tgDXehxxDExtdtfWBYusp4s6jlGkvisI4gJ7zQ0ExDsC"
+    },
+    {
+      "name": "data/dmg_UDRW_SPUD.dmg",
+      "size": 2467840,
+      "hash": "UjLmFqv-WJPRMng7FnGWwQxcHVJXmPw9A6MAZh4UzCcC"
+    },
+    {
+      "name": "data/dmg_UDSP_GPTSPUD.sparseimage",
+      "size": 3149824,
+      "hash": "ddvG5nmZUftjik3pJmtVr2rjBbzfNOpG1sL97K7WQjEC"
+    },
+    {
+      "name": "data/dmg_UDSP_NONE.sparseimage",
+      "size": 3149824,
+      "hash": "IkIKeljw840rd5N-v1yeB1wPJzy7Acv3stqVzNcZTgkC"
+    },
+    {
+      "name": "data/dmg_UDSP_SPUD.sparseimage",
+      "size": 3149824,
+      "hash": "VJzkIJpVu-47TBLqDeeF_bY3ZSN_qUkr4DhjJS0Vmr0C"
+    },
+    {
+      "name": "data/dmg_UDTO_GPTSPUD.cdr",
+      "size": 2471936,
+      "hash": "peJ7WpHBctszk9iXSRLwzBxjJVOUhOt203om2-8M8tUC"
+    },
+    {
+      "name": "data/dmg_UDTO_NONE.cdr",
+      "size": 2435072,
+      "hash": "tgDXehxxDExtdtfWBYusp4s6jlGkvisI4gJ7zQ0ExDsC"
+    },
+    {
+      "name": "data/dmg_UDTO_SPUD.cdr",
+      "size": 2465792,
+      "hash": "dB2vRoFEW_3J5oVKdYsYsf5WfUSRsBpNoUgTJJ2pqsoC"
+    },
+    {
+      "name": "data/dmg_UDZO_GPTSPUD.dmg",
+      "size": 24471,
+      "hash": "N2KpogFWCYUHsddjtUMvqnaLTOE6QeeN2-Pd_L5Xb8YC"
+    },
+    {
+      "name": "data/dmg_UDZO_NONE.dmg",
+      "size": 18778,
+      "hash": "hpKmhu_2GkWdupt3AP4eiZu8SyaEaEekSLSqwfVDvewC"
+    },
+    {
+      "name": "data/dmg_UDZO_SPUD.dmg",
+      "size": 21253,
+      "hash": "O5JcsnDoAzt1SIz0NUTp6WqKKT5hjJAwJw9h1Ss_y8QC"
+    },
+    {
+      "name": "data/dmg_UFBI_GPTSPUD.dmg",
+      "size": 2480357,
+      "hash": "W1r4j9AXQpuFhJLGiMSRsNB0vrSYxH5vq3oCYscMZv0C"
+    },
+    {
+      "name": "data/dmg_UFBI_NONE.dmg",
+      "size": 2438352,
+      "hash": "TyYoRyTvkcX_SKCdQUxYx78-qDCUly0zcfjFYTl6b8QC"
+    },
+    {
+      "name": "data/dmg_UFBI_SPUD.dmg",
+      "size": 2473289,
+      "hash": "hVzqUvRCg3B0M4zyhZEFpB1RuLWNu8Y2WcQaP702GAwC"
+    },
+    {
+      "name": "data/hfs_plus.img",
+      "size": 524288,
+      "hash": "W2C6AKVJdc2Un7dbyhvmLlGbZ_f-9vh1FZFgfl3pdrEC"
+    },
+    {
+      "name": "data/hfsx_case_sensitive.img",
+      "size": 4194304,
+      "hash": "KOeVlv4mOZ5drJx_4EPJHQQlMrd8qUJO1Xtw4xwCoz8C"
+    },
+    {
+      "name": "data/mach_o_in_dmg.dmg",
+      "size": 54791,
+      "hash": "9LVqlxjC95LnZ4yik4G8Fto2tVEqDahWNQ1rVcf9JOAC"
+    },
+    {
+      "name": "data/mach_o_in_dmg.txt",
+      "size": 54791,
+      "hash": "9LVqlxjC95LnZ4yik4G8Fto2tVEqDahWNQ1rVcf9JOAC"
+    },
+    {
+      "name": "data/mach_o_in_dmg_no_koly_signature.dmg",
+      "size": 54791,
+      "hash": "tF8GVTd34gZNxL-asY2MiP-nQh6UcJwbBSJPsazBGaMC"
+    },
+    {
+      "name": "data/mach_o_in_dmg_no_koly_signature.txt",
+      "size": 54791,
+      "hash": "tF8GVTd34gZNxL-asY2MiP-nQh6UcJwbBSJPsazBGaMC"
+    }
+  ]
+}

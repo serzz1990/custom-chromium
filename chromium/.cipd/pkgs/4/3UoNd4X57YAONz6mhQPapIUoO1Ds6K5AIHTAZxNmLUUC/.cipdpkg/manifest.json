@@ -1,0 +1,57 @@
+{
+  "format_version": "1.1",
+  "package_name": "chromium/third_party/updater/chrome_mac_universal",
+  "install_mode": "copy",
+  "files": [
+    {
+      "name": "GoogleUpdater_test.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/Helpers/ksadmin",
+      "size": 2426264,
+      "executable": true,
+      "hash": "VZx3fqOnryZpjCw2lFB8JSH6kXoW4kdVqxtGPvW0RPQC"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/Helpers/ksinstall",
+      "size": 2359992,
+      "executable": true,
+      "hash": "xOKBaO-GUI1AIqmNTXzA3nfVN0FKbJaTAQ_pJhPnKLYC"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/Info.plist",
+      "size": 1029,
+      "hash": "krGEqY3jctF9g3WmPmwDazR3dd5QKGOswk5EFN-bKucC"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/MacOS/GoogleSoftwareUpdate",
+      "size": 399640,
+      "executable": true,
+      "hash": "ZdQRjdEnNlwN3YwQBATQuaFPaQJJKw5lvQ577kWyPyIC"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/Resources/GoogleSoftwareUpdateAgent.app/Contents/Info.plist",
+      "size": 1049,
+      "hash": "MNim3qnRGmAR9w9QMNl4X-kQUGqc6b8-9KngouLaxskC"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/Resources/GoogleSoftwareUpdateAgent.app/Contents/MacOS/GoogleSoftwareUpdateAgent",
+      "size": 399640,
+      "executable": true,
+      "hash": "rtewJ4he2VB9C98fRYS8B26BS0kn54a-OpK5D2psJ-AC"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/Info.plist",
+      "size": 1211,
+      "hash": "TZPgP-fuayGHFVzmdrNkvKukBGcH5OHZ4p0-J-jAXEEC"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/MacOS/GoogleUpdater_test",
+      "size": 5563920,
+      "executable": true,
+      "hash": "-fuRIq8AUU8zvGNooG6S100O5mczFWo94Pvmr49mRp0C"
+    },
+    {
+      "name": "GoogleUpdater_test.app/Contents/PkgInfo",
+      "size": 8,
+      "hash": "glAhkclISwTWhTdPmHmgBmBpxJuKyuegSwHTjQfo7KAC"
+    }
+  ]
+}

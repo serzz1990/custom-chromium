@@ -1,0 +1,185 @@
+{
+  "format_version": "1.1",
+  "package_name": "chromium/third_party/updater/chromium_mac_amd64",
+  "install_mode": "copy",
+  "files": [
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Helpers/ksadmin",
+      "size": 1506520,
+      "executable": true,
+      "hash": "5ewGz7ZbMZ4ALMhhLNVVqURZjo_j29NZ3MGZl_zJ3wUC"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Helpers/ksinstall",
+      "size": 1440344,
+      "executable": true,
+      "hash": "NOQFiJI-gtbM-Y3AGxqkQczw7xT0kX3gcWKy4lHPkJUC"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Info.plist",
+      "size": 1037,
+      "hash": "uJBz71W_4YETLCUkOPQzAI-fGQo5kpjvCWBrEI93tMgC"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/MacOS/ChromiumSoftwareUpdate",
+      "size": 292256,
+      "executable": true,
+      "hash": "1qQ2tUs-BY3c5XiSA9-0VWBsSFK29MvZPrOxa2orqAoC"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Resources/ChromiumSoftwareUpdateAgent.app/Contents/MacOS/ChromiumSoftwareUpdateAgent",
+      "size": 292256,
+      "executable": true,
+      "hash": "SsgELY4Lx6CWsRXrzO3Uigb8C5c6a4_iyR_92g09HpMC"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Resources/ChromiumSoftwareUpdateAgent.app/Contents/MacOS/Info.plist",
+      "size": 1057,
+      "hash": "F-1liHK8vTsgjrEPivSnsD3LGYJLfaOYYD64K3sHYRUC"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/Info.plist",
+      "size": 1203,
+      "hash": "KMsqvnbuxjwf86wyrH1mY9j2a_Vb4W0bVj3qBHX1pj0C"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/MacOS/ChromiumUpdater",
+      "size": 3234528,
+      "executable": true,
+      "hash": "p5Hhpgcg2Nt4PVrciV3206sOYWQWCoa8WkiG4iZdxgcC"
+    },
+    {
+      "name": "updater/ChromiumUpdater.app/Contents/PkgInfo",
+      "size": 8,
+      "hash": "glAhkclISwTWhTdPmHmgBmBpxJuKyuegSwHTjQfo7KAC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Helpers/ksadmin",
+      "size": 1506520,
+      "executable": true,
+      "hash": "5ewGz7ZbMZ4ALMhhLNVVqURZjo_j29NZ3MGZl_zJ3wUC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Helpers/ksinstall",
+      "size": 1440344,
+      "executable": true,
+      "hash": "NOQFiJI-gtbM-Y3AGxqkQczw7xT0kX3gcWKy4lHPkJUC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Info.plist",
+      "size": 1037,
+      "hash": "uJBz71W_4YETLCUkOPQzAI-fGQo5kpjvCWBrEI93tMgC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/MacOS/ChromiumSoftwareUpdate",
+      "size": 292256,
+      "executable": true,
+      "hash": "1qQ2tUs-BY3c5XiSA9-0VWBsSFK29MvZPrOxa2orqAoC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Resources/ChromiumSoftwareUpdateAgent.app/Contents/MacOS/ChromiumSoftwareUpdateAgent",
+      "size": 292256,
+      "executable": true,
+      "hash": "SsgELY4Lx6CWsRXrzO3Uigb8C5c6a4_iyR_92g09HpMC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/Helpers/ChromiumSoftwareUpdate.bundle/Contents/Resources/ChromiumSoftwareUpdateAgent.app/Contents/MacOS/Info.plist",
+      "size": 1057,
+      "hash": "F-1liHK8vTsgjrEPivSnsD3LGYJLfaOYYD64K3sHYRUC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/Info.plist",
+      "size": 1218,
+      "hash": "9cAg97XcQeckeDRU0MZ1xuFKApEyVRh2c4ktFmLG6jgC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/MacOS/ChromiumUpdater_test",
+      "size": 3246896,
+      "executable": true,
+      "hash": "wUX-AbysVf3ZapfmCVYgMpFB37CtTGmxYuMvkDfrpHgC"
+    },
+    {
+      "name": "updater/ChromiumUpdater_test.app/Contents/PkgInfo",
+      "size": 8,
+      "hash": "glAhkclISwTWhTdPmHmgBmBpxJuKyuegSwHTjQfo7KAC"
+    },
+    {
+      "name": "updater/Updater Packaging/sign_updater.py",
+      "size": 5210,
+      "executable": true,
+      "hash": "W8VcPtIt7jKNiXmvIvPXPlCo52Nb2ZB5f5yNzSgkntkC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/__init__.py",
+      "size": 447,
+      "hash": "kUZ_WE4wpg1CjzFTWD97ntv9Ml69CgHtJMnjPaxdDDAC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/build_props_config.py",
+      "size": 1050,
+      "hash": "vNNxl0f8fquB1dQrlpkZObBlaVc-bEl9syY_AH2mVQ0C"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/commands.py",
+      "size": 6564,
+      "hash": "wJR_5L8P0GzQ9Y4jMGl3rBUX9lygugrsqQenZeSqe08C"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/config.py",
+      "size": 8217,
+      "hash": "LVl4QlYI9ZQbCc0BGQ2qAK3NZvxxmUc_RmZonBrJFKcC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/config_factory.py",
+      "size": 338,
+      "hash": "KaihEP7JwuiXPhYXskOTZtrpYRhGsiHL7JoeIffIkhgC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/model.py",
+      "size": 14134,
+      "hash": "Tl8iDxOY-U22evrum5FylyA3Gi91E7121PfJgDqL6B4C"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/modification.py",
+      "size": 9698,
+      "hash": "LaAd4t1Hdbr_6m5GA45GF_G3LxAWwwa1thbxcFObDO0C"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/notarize.py",
+      "size": 9125,
+      "hash": "IzYq-r9mcn96nMIH7Cr1SjCjQF4jcjd-1PXBQ_8gQ0EC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/parts.py",
+      "size": 3405,
+      "hash": "11g9xS-9iT4pz8OHI8fKr4CVyrCMEjfsZfLFjTRc43sC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/pipeline.py",
+      "size": 5299,
+      "hash": "GqaZrl57_5YJW5hVGgZl2WCG5acTGJ61db0i1qLGaLcC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/pkg-dmg",
+      "size": 51911,
+      "executable": true,
+      "hash": "07sXyuigOr2pHi_mJzosYL4nOiv35EhDWFqqY5zEQ_kC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/signing.py",
+      "size": 4706,
+      "hash": "aBSh0GQcJdt1nnEWr5pxz7IAZUHJNwInKI7ZccvjZlcC"
+    },
+    {
+      "name": "updater/Updater Packaging/signing/unbranded_config.py",
+      "size": 511,
+      "hash": "eA-fwaJvtznq7Ok63xBytdvKfLuBXi_8KxrOEKGou0cC"
+    },
+    {
+      "name": "updater/chrome/updater/.install",
+      "size": 368,
+      "executable": true,
+      "hash": "myqkUUarGj9lbecsfwLUCLZf8m_b4W4bIIYSh5Hhig4C"
+    }
+  ]
+}
