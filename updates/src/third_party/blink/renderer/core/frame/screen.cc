@@ -25,18 +25,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #include "third_party/blink/renderer/core/frame/screen.h"
-
-#include <stddef.h>
-#include <utility>
-
-// START UPDATES
+//START-UPDATES
 #include "third_party/blink/public/common/switches.h"
 #include "base/command_line.h"
-// END UPDATES
-
-#include "build/build_config.h"
 #include "base/strings/string_number_conversions.h"
+//END-UPDATES
+
 #include "base/numerics/safe_conversions.h"
 #include "third_party/blink/public/mojom/permissions_policy/permissions_policy_feature.mojom-blink.h"
 #include "third_party/blink/renderer/core/event_target_names.h"
@@ -88,7 +84,7 @@ bool Screen::AreWebExposedScreenPropertiesEqual(
 int Screen::height() const {
   if (!DomWindow())
     return 0;
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           blink::switches::kCustomScreenHeight)) {
     std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenHeight);
@@ -96,7 +92,7 @@ int Screen::height() const {
     base::StringToInt(str, &value);
     return value;
   }
-  // END UPDATES
+//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
@@ -109,7 +105,7 @@ int Screen::height() const {
 int Screen::width() const {
   if (!DomWindow())
     return 0;
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           blink::switches::kCustomScreenWidth)) {
       const base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
@@ -118,7 +114,7 @@ int Screen::width() const {
       base::StringToInt(str, &value);
       return value;
   }
-  // END UPDATES
+//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
@@ -131,40 +127,40 @@ int Screen::width() const {
 unsigned Screen::colorDepth() const {
   if (!DomWindow())
     return 0;
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenColorDepth)) {
       std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenColorDepth);
       int value;
       base::StringToInt(str, &value);
       return value;
   }
-  // END UPDATES
+//END-UPDATES
   return base::saturated_cast<unsigned>(GetScreenInfo().depth);
 }
 
 unsigned Screen::pixelDepth() const {
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenPixelDepth)) {
       std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenPixelDepth);
       int value;
       base::StringToInt(str, &value);
       return value;
   }
-  // END UPDATES
+//END-UPDATES
   return colorDepth();
 }
 
 int Screen::availLeft() const {
   if (!DomWindow())
     return 0;
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailLeft)) {
       std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailLeft);
       int value;
       base::StringToInt(str, &value);
       return value;
   }
-  // END UPDATES
+//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
@@ -177,14 +173,14 @@ int Screen::availLeft() const {
 int Screen::availTop() const {
   if (!DomWindow())
     return 0;
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailTop)) {
       std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailTop);
       int value;
       base::StringToInt(str, &value);
       return value;
   }
-  // END UPDATES
+//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
@@ -197,14 +193,14 @@ int Screen::availTop() const {
 int Screen::availHeight() const {
   if (!DomWindow())
     return 0;
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailHeight)) {
       std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailHeight);
       int value;
       base::StringToInt(str, &value);
       return value;
   }
-  // END UPDATES
+//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
@@ -217,14 +213,14 @@ int Screen::availHeight() const {
 int Screen::availWidth() const {
   if (!DomWindow())
     return 0;
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailWidth)) {
       std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailWidth);
       int value;
       base::StringToInt(str, &value);
       return value;
   }
-  // END UPDATES
+//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {

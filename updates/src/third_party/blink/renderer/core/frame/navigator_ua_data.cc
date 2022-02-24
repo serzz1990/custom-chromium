@@ -16,11 +16,10 @@
 #include "third_party/blink/renderer/bindings/core/v8/v8_ua_data_values.h"
 #include "third_party/blink/renderer/core/execution_context/execution_context.h"
 #include "third_party/blink/renderer/core/page/page.h"
-
-// START UPDATES
+//START-UPDATES
 #include "third_party/blink/public/common/switches.h"
 #include "base/command_line.h"
-// END UPDATES
+//END-UPDATES
 
 namespace blink {
 
@@ -68,22 +67,23 @@ void NavigatorUAData::AddBrandFullVersion(const String& brand,
   full_version_list_.push_back(dict);
 }
 
-void NavigatorUAData::SetBrandVersionList(const UserAgentBrandList& brand_version_list) {
-    // START UPDATES
-    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-            blink::switches::kCustomChromeVersion)) {
-        std::string chromeVersion = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomChromeVersion);
+void NavigatorUAData::SetBrandVersionList(
+    const UserAgentBrandList& brand_version_list) {
+//START-UPDATES
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          blink::switches::kCustomChromeVersion)) {
+      std::string chromeVersion = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomChromeVersion);
 
-        AddBrandVersion("Chromium", chromeVersion.data());
-        AddBrandVersion("Google Chrome", chromeVersion.data());
-        AddBrandVersion(" Not A;Brand", "99");
-        // END UPDATES
-    } else {
-        for (const auto& brand_version : brand_version_list) {
-            AddBrandVersion(String::FromUTF8(brand_version.brand),
+      AddBrandVersion("Chromium", chromeVersion.data());
+      AddBrandVersion("Google Chrome", chromeVersion.data());
+      AddBrandVersion(" Not A;Brand", "99");
+      return;
+  }
+//END-UPDATES
+  for (const auto& brand_version : brand_version_list) {
+    AddBrandVersion(String::FromUTF8(brand_version.brand),
                     String::FromUTF8(brand_version.version));
-        }
-    }
+  }
 }
 
 void NavigatorUAData::SetFullVersionList(

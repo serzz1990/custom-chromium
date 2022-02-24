@@ -33,13 +33,13 @@
 #include "third_party/blink/renderer/core/loader/frame_loader.h"
 #include "third_party/blink/renderer/core/page/chrome_client.h"
 #include "third_party/blink/renderer/core/page/page.h"
+#include "third_party/blink/renderer/core/probe/core_probes.h"
 #include "third_party/blink/renderer/platform/instrumentation/memory_pressure_listener.h"
 #include "third_party/blink/renderer/platform/language.h"
-
-// START UPDATES
+//START-UPDATES
 #include "third_party/blink/public/common/switches.h"
 #include "base/command_line.h"
-// END UPDATES
+//END-UPDATES
 
 namespace blink {
 
@@ -67,15 +67,13 @@ String Navigator::platform() const {
   // mobile and desktop when ReduceUserAgent is enabled.
   if (!DomWindow())
     return NavigatorBase::platform();
-
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
         blink::switches::kCustomNavigatorPlatform)) {
     std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorPlatform);
     return str.data();
   }
-  // END UPDATES
-
+//END-UPDATES
   const String& platform_override =
       DomWindow()->GetFrame()->GetSettings()->GetNavigatorPlatformOverride();
   return platform_override.IsEmpty() ? NavigatorBase::platform()
@@ -93,16 +91,24 @@ bool Navigator::cookieEnabled() const {
   return DomWindow()->document()->CookiesEnabled();
 }
 
-String Navigator::GetAcceptLanguages() {
-  String accept_languages;
-  if (DomWindow()) {
-    accept_languages =
-        DomWindow()->GetFrame()->GetPage()->GetChromeClient().AcceptLanguages();
-  } else {
-    accept_languages = DefaultLanguage();
-  }
+bool Navigator::webdriver() const {
+  if (RuntimeEnabledFeatures::AutomationControlledEnabled())
+    return true;
 
-  return accept_languages;
+  bool automation_enabled = false;
+  probe::ApplyAutomationOverride(GetExecutionContext(), automation_enabled);
+  return automation_enabled;
+}
+
+String Navigator::GetAcceptLanguages() {
+  if (!DomWindow())
+    return DefaultLanguage();
+
+  return DomWindow()
+      ->GetFrame()
+      ->GetPage()
+      ->GetChromeClient()
+      .AcceptLanguages();
 }
 
 void Navigator::Trace(Visitor* visitor) const {

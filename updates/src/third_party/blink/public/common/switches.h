@@ -50,8 +50,7 @@ BLINK_COMMON_EXPORT extern const char kSharedArrayBufferAllowedOrigins[];
 BLINK_COMMON_EXPORT extern const char kShowLayoutShiftRegions[];
 BLINK_COMMON_EXPORT extern const char kShowPaintRects[];
 BLINK_COMMON_EXPORT extern const char kTouchTextSelectionStrategy[];
-BLINK_COMMON_EXPORT extern const char kWebSQLInThirdPartyContextEnabled[];
-// START UPDATES
+//START-UPDATES
 BLINK_COMMON_EXPORT extern const char kCustomChromeVersion[];
 
 BLINK_COMMON_EXPORT extern const char kCustomScreenWidth[];
@@ -69,7 +68,7 @@ BLINK_COMMON_EXPORT extern const char kCustomNavigatorDeviceMemory[];
 BLINK_COMMON_EXPORT extern const char kCustomNavigatorDoNotTrack[];
 BLINK_COMMON_EXPORT extern const char kCustomNavigatorLanguages[];
 BLINK_COMMON_EXPORT extern const char kCustomNavigatorLanguage[];
-// END UPDATES
+//END-UPDATES
 
 }  // namespace switches
 }  // namespace blink

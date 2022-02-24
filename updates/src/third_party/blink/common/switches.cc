@@ -4,7 +4,6 @@
 
 #include "third_party/blink/public/common/switches.h"
 
-
 namespace blink {
 namespace switches {
 
@@ -136,13 +135,9 @@ const char kSharedArrayBufferAllowedOrigins[] =
 // Allows overriding the conditional focus window's length.
 const char kConditionalFocusWindowMs[] = "conditional-focus-window-ms";
 
-const char kWebSQLInThirdPartyContextEnabled[] =
-    "web-sql-in-third-party-context-enabled";
-
 // Specifies the flags passed to JS engine.
 const char kJavaScriptFlags[] = "js-flags";
-
-// START UPDATES
+//START-UPDATES
 const char kCustomChromeVersion[]           = "custom-chrome-version";
 
 const char kCustomScreenWidth[]             = "custom-screen-width";
@@ -160,7 +155,7 @@ const char kCustomNavigatorDeviceMemory[]   = "custom-navigator-device-memory";
 const char kCustomNavigatorDoNotTrack[]     = "custom-navigator-do-not-track";
 const char kCustomNavigatorLanguages[]      = "custom-navigator-languages";
 const char kCustomNavigatorLanguage[]       = "custom-navigator-language";
-// END UPDATES
+//END-UPDATES
 
 }  // namespace switches
 }  // namespace blink

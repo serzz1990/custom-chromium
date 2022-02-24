@@ -5,17 +5,16 @@
 #include "third_party/blink/renderer/core/frame/navigator_concurrent_hardware.h"
 
 #include "base/system/sys_info.h"
-
-// START UPDATES
+//START-UPDATES
 #include "third_party/blink/public/common/switches.h"
 #include "base/command_line.h"
 #include "base/strings/string_number_conversions.h"
-// END UPDATES
+//END-UPDATES
 
 namespace blink {
 
 unsigned NavigatorConcurrentHardware::hardwareConcurrency() const {
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
             blink::switches::kCustomNavigatorHardwareConcurrency)) {
     std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorHardwareConcurrency);
@@ -23,7 +22,7 @@ unsigned NavigatorConcurrentHardware::hardwareConcurrency() const {
     base::StringToInt(str, &value);
     return value;
   }
-  // END UPDATES
+//END-UPDATES
   return static_cast<unsigned>(base::SysInfo::NumberOfProcessors());
 }
 

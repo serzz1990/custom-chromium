@@ -79,6 +79,7 @@
 #include "content/browser/bad_message.h"
 #include "content/browser/blob_storage/blob_registry_wrapper.h"
 #include "content/browser/browser_child_process_host_impl.h"
+#include "content/browser/browser_context_impl.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/buckets/bucket_context.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -168,6 +169,7 @@
 #include "media/capture/capture_switches.h"
 #include "media/media_buildflags.h"
 #include "media/mojo/services/video_decode_perf_history.h"
+#include "media/mojo/services/webrtc_video_perf_history.h"
 #include "media/webrtc/webrtc_features.h"
 #include "mojo/public/cpp/bindings/pending_receiver.h"
 #include "mojo/public/cpp/bindings/receiver.h"
@@ -2064,6 +2066,14 @@ void RenderProcessHostImpl::BindVideoDecodePerfHistory(
       std::move(receiver));
 }
 
+void RenderProcessHostImpl::BindWebrtcVideoPerfHistory(
+    mojo::PendingReceiver<media::mojom::WebrtcVideoPerfHistory> receiver) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  BrowserContextImpl::From(GetBrowserContext())
+      ->GetWebrtcVideoPerfHistory()
+      ->BindReceiver(std::move(receiver));
+}
+
 void RenderProcessHostImpl::BindQuotaManagerHost(
     int render_frame_id,
     const url::Origin& origin,
@@ -3424,27 +3434,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     blink::switches::kShowPaintRects,
     blink::switches::kTouchTextSelectionStrategy,
     blink::switches::kJavaScriptFlags,
-
-    // START UPDATES
-    blink::switches::kCustomChromeVersion,
-
-    blink::switches::kCustomScreenWidth,
-    blink::switches::kCustomScreenHeight,
-    blink::switches::kCustomScreenAvailWidth,
-    blink::switches::kCustomScreenAvailHeight,
-    blink::switches::kCustomScreenAvailLeft,
-    blink::switches::kCustomScreenAvailTop,
-    blink::switches::kCustomScreenColorDepth,
-    blink::switches::kCustomScreenPixelDepth,
-
-    blink::switches::kCustomNavigatorPlatform,
-    blink::switches::kCustomNavigatorHardwareConcurrency,
-    blink::switches::kCustomNavigatorDeviceMemory,
-    blink::switches::kCustomNavigatorDoNotTrack,
-    blink::switches::kCustomNavigatorLanguages,
-    blink::switches::kCustomNavigatorLanguage,
-    // END UPDATES
-
     // Please keep these in alphabetical order. Compositor switches here
     // should also be added to
     // chrome/browser/ash/login/chrome_restart_request.cc.
@@ -3466,6 +3455,25 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     cc::switches::kBrowserControlsHideThreshold,
     cc::switches::kBrowserControlsShowThreshold,
     switches::kRunAllCompositorStagesBeforeDraw,
+//START-UPDATES
+    blink::switches::kCustomChromeVersion,
+
+    blink::switches::kCustomScreenWidth,
+    blink::switches::kCustomScreenHeight,
+    blink::switches::kCustomScreenAvailWidth,
+    blink::switches::kCustomScreenAvailHeight,
+    blink::switches::kCustomScreenAvailLeft,
+    blink::switches::kCustomScreenAvailTop,
+    blink::switches::kCustomScreenColorDepth,
+    blink::switches::kCustomScreenPixelDepth,
+
+    blink::switches::kCustomNavigatorPlatform,
+    blink::switches::kCustomNavigatorHardwareConcurrency,
+    blink::switches::kCustomNavigatorDeviceMemory,
+    blink::switches::kCustomNavigatorDoNotTrack,
+    blink::switches::kCustomNavigatorLanguages,
+    blink::switches::kCustomNavigatorLanguage,
+//END-UPDATES
 
 #if BUILDFLAG(ENABLE_PLUGINS)
     switches::kEnablePepperTesting,

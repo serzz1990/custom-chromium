@@ -10,16 +10,16 @@
 #include "third_party/blink/public/mojom/web_feature/web_feature.mojom-shared.h"
 #include "third_party/blink/renderer/core/dom/document.h"
 #include "third_party/blink/renderer/core/frame/local_dom_window.h"
-// START UPDATES
+//START-UPDATES
 #include "third_party/blink/public/common/switches.h"
 #include "base/command_line.h"
 #include "base/strings/string_number_conversions.h"
-// END UPDATES
+//END-UPDATES
 
 namespace blink {
 
 float NavigatorDeviceMemory::deviceMemory() const {
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
             blink::switches::kCustomNavigatorDeviceMemory)) {
     std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorDeviceMemory);
@@ -27,7 +27,7 @@ float NavigatorDeviceMemory::deviceMemory() const {
     base::StringToInt(str, &value);
     return value;
   }
-  // END UPDATES
+//END-UPDATES
   return ApproximatedDeviceMemory::GetApproximatedDeviceMemory();
 }
 

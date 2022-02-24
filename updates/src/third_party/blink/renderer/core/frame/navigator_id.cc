@@ -35,12 +35,11 @@
 #include "build/build_config.h"
 #include "third_party/blink/public/common/features.h"
 #include "third_party/blink/renderer/platform/wtf/text/string_builder.h"
-
-// START UPDATES
+//START-UPDATES
 #include "third_party/blink/public/common/switches.h"
 #include "base/command_line.h"
 #include "base/strings/utf_string_conversions.h"
-// END UPDATES
+//END-UPDATES
 
 #if !BUILDFLAG(IS_MAC) && !BUILDFLAG(IS_WIN)
 #include <sys/utsname.h>
@@ -65,15 +64,13 @@ String NavigatorID::appVersion() {
 }
 
 String NavigatorID::platform() const {
-
-  // START UPDATES
+//START-UPDATES
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
             blink::switches::kCustomNavigatorPlatform)) {
     std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorPlatform);
     return str.data();
   }
-  // END UPDATES
-
+//END-UPDATES
 #if BUILDFLAG(IS_MAC)
   // Match Safari and Mozilla on Mac x86.
   return "MacIntel";
