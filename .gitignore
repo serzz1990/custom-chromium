@@ -1,3 +1,6 @@
-/depot_tools*/
-/node_modules*/
+depot_tools
+node_modules
+chromium
+build
 .idea
+.DS_Store

@@ -1,0 +1,25 @@
+{
+  "name": "custom-chromium",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup": "node ./builder/cmd/setup.js",
+    "restore": "node ./builder/cmd/restore.js",
+    "launch": "node ./builder/cmd/launch.js",
+    "build": "node ./builder/cmd/build.js",
+    "watch": "node ./builder/cmd/watch.js",
+    "dist": "node ./builder/cmd/dist.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cli-progress": "^3.10.0",
+    "colors": "^1.4.0",
+    "fs-extra": "^10.0.0",
+    "get-folder-size": "2.0.1",
+    "puppeteer": "^13.3.2",
+    "safe-merge-files": "^0.2.3",
+    "shelljs": "^0.8.5"
+  }
+}
