@@ -19,6 +19,10 @@ The goal of the project is to completely fake the fingerprint of any device with
     ┣ 📂dist (distribution kit)
     ┗ 📂updates (changes made to chromium assembly)
 
+## How does it work?
+
+  soon
+
 ## Links 
 
 * [Telegram chat](https://t.me/cchromium)
