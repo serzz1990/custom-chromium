@@ -25,5 +25,5 @@ $  npm install
 
 Project setup (it's a very long process, be patient)
 ```
-$  node ./setup
+$  npm run setup
 ```
