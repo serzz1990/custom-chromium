@@ -28,9 +28,13 @@ The goal of the project is to completely fake the fingerprint of any device with
 * [Telegram chat](https://t.me/cchromium)
 * [pixelscan](https://pixelscan.net/)
 * [creepjs](https://abrahamjuliot.github.io/creepjs/)
+* [best practice for patching chrome](https://github.com/Eloston/ungoogled-chromium/tree/master/patches/extra)
+* [json with all infos](https://github.com/brave/brave-browser/wiki/Patching-Chromium)
     
 
 ## TODO
+* change patching chrome 
+* create one json with all params
 * [chrome.app](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/chrome.app)
 * [chrome.csi](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/chrome.csi)
 * [chrome.runtime](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/chrome.runtime)
