@@ -13,6 +13,10 @@
     "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36",
     "platform": "Win32",
     "deviceMemory": 2,
-    "hardwareConcurrency": 2
+    "hardwareConcurrency": 2,
+    "vendor": "Google Inc.",
+    "vendorSub": "",
+    "product": "Gecko",
+    "productSub": "20030107"
   }
 }

@@ -37,8 +37,7 @@
 #include "third_party/blink/renderer/platform/instrumentation/memory_pressure_listener.h"
 #include "third_party/blink/renderer/platform/language.h"
 //START-UPDATES
-#include "third_party/blink/public/common/switches.h"
-#include "base/command_line.h"
+#include "base/custom_device.h"
 //END-UPDATES
 
 namespace blink {
@@ -46,6 +45,12 @@ namespace blink {
 Navigator::Navigator(ExecutionContext* context) : NavigatorBase(context) {}
 
 String Navigator::productSub() const {
+//START-UPDATES
+  const std::string value = base::CustomDevice::GetInstance()->GetNavigatorStringProp("productSub", "20030107");
+  if (!value.empty()) {
+    return value.data();
+  }
+//END-UPDATES
   return "20030107";
 }
 
@@ -54,10 +59,22 @@ String Navigator::vendor() const {
   // https://code.google.com/p/chromium/issues/detail?id=276813
   // https://www.w3.org/Bugs/Public/show_bug.cgi?id=27786
   // https://groups.google.com/a/chromium.org/forum/#!topic/blink-dev/QrgyulnqvmE
+//START-UPDATES
+  const std::string value = base::CustomDevice::GetInstance()->GetNavigatorStringProp("vendor", "Google Inc.");
+  if (!value.empty()) {
+    return value.data();
+  }
+//END-UPDATES
   return "Google Inc.";
 }
 
 String Navigator::vendorSub() const {
+//START-UPDATES
+  const std::string value = base::CustomDevice::GetInstance()->GetNavigatorStringProp("vendorSub", "");
+  if (!value.empty()) {
+    return value.data();
+  }
+//END-UPDATES
   return "";
 }
 
@@ -67,13 +84,6 @@ String Navigator::platform() const {
   // mobile and desktop when ReduceUserAgent is enabled.
   if (!DomWindow())
     return NavigatorBase::platform();
-//START-UPDATES
-//  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-//        blink::switches::kCustomNavigatorPlatform)) {
-//    std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorPlatform);
-//    return str.data();
-//  }
-//END-UPDATES
   const String& platform_override =
       DomWindow()->GetFrame()->GetSettings()->GetNavigatorPlatformOverride();
   return platform_override.IsEmpty() ? NavigatorBase::platform()

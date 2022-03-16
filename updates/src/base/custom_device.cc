@@ -65,12 +65,9 @@ int CustomDevice::GetScreenProp(std::string prop, int defaultValue) const {
     const auto* propValue = screen->FindKey(prop);
     if (propValue) {
       return propValue->GetInt();
-    } else {
-      return defaultValue;
     }
-  } else {
-    return 0;
   }
+  return defaultValue;
 }
 
 float CustomDevice::GetNavigatorFloatProp(std::string prop, float defaultValue) const {
@@ -79,12 +76,20 @@ float CustomDevice::GetNavigatorFloatProp(std::string prop, float defaultValue) 
     const auto* propValue = navigator->FindKey(prop);
     if (propValue) {
       return propValue->GetInt();
-    } else {
-      return defaultValue;
     }
-  } else {
-    return defaultValue;
   }
+  return defaultValue;
+}
+
+std::string CustomDevice::GetNavigatorStringProp(std::string prop, std::string defaultValue) const {
+  if (HasDict("navigator")) {
+    const auto* navigator = JSON->FindKey("navigator");
+    const auto* propValue = navigator->FindKey(prop);
+    if (propValue) {
+      return propValue->GetString();
+    }
+  }
+  return "";
 }
 
 std::string CustomDevice::GetNavigatorPlatform() const {
@@ -93,9 +98,7 @@ std::string CustomDevice::GetNavigatorPlatform() const {
     const auto* navigator = JSON->FindKey("navigator");
     const auto* propValue = navigator->FindKey("platform");
     if (propValue) {
-      return propValue->GetString();
-    } else {
-      return "";
+      result = propValue->GetString();
     }
   }
   return result;

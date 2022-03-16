@@ -1,14 +1,6 @@
 #ifndef BASE_CUSTOM_DEVICE_H_
 #define BASE_CUSTOM_DEVICE_H_
 
-//#include <stddef.h>
-//#include <functional>
-//#include <map>
-//#include <memory>
-
-//#include <string>
-//#include <vector>
-
 #include "base/base_export.h"
 #include "build/build_config.h"
 #include "base/values.h"
@@ -21,6 +13,7 @@ class BASE_EXPORT CustomDevice {
 
     int GetScreenProp(std::string prop, int defaultValue) const;
     float GetNavigatorFloatProp(std::string prop, float defaultValue) const;
+    std::string GetNavigatorStringProp(std::string prop, std::string defaultValue) const;
     std::string GetNavigatorPlatform() const;
     std::string GetChromeMajorVersion() const;
 
