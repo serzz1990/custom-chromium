@@ -28,9 +28,7 @@
 
 #include "third_party/blink/renderer/core/frame/screen.h"
 //START-UPDATES
-#include "third_party/blink/public/common/switches.h"
-#include "base/command_line.h"
-#include "base/strings/string_number_conversions.h"
+#include "base/custom_device.h"
 //END-UPDATES
 
 #include "base/numerics/safe_conversions.h"
@@ -84,17 +82,16 @@ bool Screen::AreWebExposedScreenPropertiesEqual(
 int Screen::height() const {
   if (!DomWindow())
     return 0;
-//START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          blink::switches::kCustomScreenHeight)) {
-    std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenHeight);
-    int value;
-    base::StringToInt(str, &value);
-    return value;
-  }
-//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
+//START-UPDATES
+    if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+      return base::CustomDevice::GetInstance()->GetScreenProp(
+        "height",
+        screen_info.rect.height()
+      );
+    }
+//END-UPDATES
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
     return base::ClampRound(screen_info.rect.height() *
                             screen_info.device_scale_factor);
@@ -105,18 +102,16 @@ int Screen::height() const {
 int Screen::width() const {
   if (!DomWindow())
     return 0;
-//START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          blink::switches::kCustomScreenWidth)) {
-      const base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
-      std::string str = command_line.GetSwitchValueASCII(blink::switches::kCustomScreenWidth);
-      int value;
-      base::StringToInt(str, &value);
-      return value;
-  }
-//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
+//START-UPDATES
+    if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+      return base::CustomDevice::GetInstance()->GetScreenProp(
+        "width",
+        screen_info.rect.width()
+      );
+    }
+//END-UPDATES
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
     return base::ClampRound(screen_info.rect.width() *
                             screen_info.device_scale_factor);
@@ -128,11 +123,11 @@ unsigned Screen::colorDepth() const {
   if (!DomWindow())
     return 0;
 //START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenColorDepth)) {
-      std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenColorDepth);
-      int value;
-      base::StringToInt(str, &value);
-      return value;
+  if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+    return base::CustomDevice::GetInstance()->GetScreenProp(
+      "colorDepth",
+      GetScreenInfo().depth
+    );
   }
 //END-UPDATES
   return base::saturated_cast<unsigned>(GetScreenInfo().depth);
@@ -140,11 +135,11 @@ unsigned Screen::colorDepth() const {
 
 unsigned Screen::pixelDepth() const {
 //START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenPixelDepth)) {
-      std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenPixelDepth);
-      int value;
-      base::StringToInt(str, &value);
-      return value;
+  if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+    return base::CustomDevice::GetInstance()->GetScreenProp(
+      "pixelDepth",
+      colorDepth()
+    );
   }
 //END-UPDATES
   return colorDepth();
@@ -153,16 +148,16 @@ unsigned Screen::pixelDepth() const {
 int Screen::availLeft() const {
   if (!DomWindow())
     return 0;
-//START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailLeft)) {
-      std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailLeft);
-      int value;
-      base::StringToInt(str, &value);
-      return value;
-  }
-//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
+//START-UPDATES
+    if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+      return base::CustomDevice::GetInstance()->GetScreenProp(
+        "availLeft",
+        screen_info.available_rect.x()
+      );
+    }
+//END-UPDATES
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
     return base::ClampRound(screen_info.available_rect.x() *
                             screen_info.device_scale_factor);
@@ -173,16 +168,16 @@ int Screen::availLeft() const {
 int Screen::availTop() const {
   if (!DomWindow())
     return 0;
-//START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailTop)) {
-      std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailTop);
-      int value;
-      base::StringToInt(str, &value);
-      return value;
-  }
-//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
+//START-UPDATES
+    if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+      return base::CustomDevice::GetInstance()->GetScreenProp(
+        "availTop",
+        screen_info.available_rect.y()
+      );
+    }
+//END-UPDATES
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
     return base::ClampRound(screen_info.available_rect.y() *
                             screen_info.device_scale_factor);
@@ -193,16 +188,16 @@ int Screen::availTop() const {
 int Screen::availHeight() const {
   if (!DomWindow())
     return 0;
-//START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailHeight)) {
-      std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailHeight);
-      int value;
-      base::StringToInt(str, &value);
-      return value;
-  }
-//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
+//START-UPDATES
+    if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+      return base::CustomDevice::GetInstance()->GetScreenProp(
+        "availHeight",
+        screen_info.available_rect.height()
+      );
+    }
+//END-UPDATES
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
     return base::ClampRound(screen_info.available_rect.height() *
                             screen_info.device_scale_factor);
@@ -213,16 +208,16 @@ int Screen::availHeight() const {
 int Screen::availWidth() const {
   if (!DomWindow())
     return 0;
-//START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(blink::switches::kCustomScreenAvailWidth)) {
-      std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomScreenAvailWidth);
-      int value;
-      base::StringToInt(str, &value);
-      return value;
-  }
-//END-UPDATES
   LocalFrame* frame = DomWindow()->GetFrame();
   const display::ScreenInfo& screen_info = GetScreenInfo();
+//START-UPDATES
+    if (base::CustomDevice::GetInstance()->HasDict("screen")) {
+      return base::CustomDevice::GetInstance()->GetScreenProp(
+        "availWidth",
+        screen_info.available_rect.width()
+      );
+    }
+//END-UPDATES
   if (frame->GetSettings()->GetReportScreenSizeInPhysicalPixelsQuirk()) {
     return base::ClampRound(screen_info.available_rect.width() *
                             screen_info.device_scale_factor);

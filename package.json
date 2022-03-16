@@ -1,6 +1,6 @@
 {
   "name": "custom-chromium",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "restore": "node ./builder/cmd/restore.js",
     "launch": "node ./builder/cmd/launch.js",
     "build": "node ./builder/cmd/build.js",
+    "gen": "node ./builder/cmd/gen.js",
     "watch": "node ./builder/cmd/watch.js",
     "dist": "node ./builder/cmd/dist.js"
   },

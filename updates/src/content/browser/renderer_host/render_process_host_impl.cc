@@ -3456,23 +3456,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     cc::switches::kBrowserControlsShowThreshold,
     switches::kRunAllCompositorStagesBeforeDraw,
 //START-UPDATES
-    blink::switches::kCustomChromeVersion,
-
-    blink::switches::kCustomScreenWidth,
-    blink::switches::kCustomScreenHeight,
-    blink::switches::kCustomScreenAvailWidth,
-    blink::switches::kCustomScreenAvailHeight,
-    blink::switches::kCustomScreenAvailLeft,
-    blink::switches::kCustomScreenAvailTop,
-    blink::switches::kCustomScreenColorDepth,
-    blink::switches::kCustomScreenPixelDepth,
-
-    blink::switches::kCustomNavigatorPlatform,
-    blink::switches::kCustomNavigatorHardwareConcurrency,
-    blink::switches::kCustomNavigatorDeviceMemory,
-    blink::switches::kCustomNavigatorDoNotTrack,
-    blink::switches::kCustomNavigatorLanguages,
-    blink::switches::kCustomNavigatorLanguage,
+    switches::kCustomDeviceData,
 //END-UPDATES
 
 #if BUILDFLAG(ENABLE_PLUGINS)

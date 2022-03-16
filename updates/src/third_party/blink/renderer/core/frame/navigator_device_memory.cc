@@ -11,21 +11,18 @@
 #include "third_party/blink/renderer/core/dom/document.h"
 #include "third_party/blink/renderer/core/frame/local_dom_window.h"
 //START-UPDATES
-#include "third_party/blink/public/common/switches.h"
-#include "base/command_line.h"
-#include "base/strings/string_number_conversions.h"
+#include "base/custom_device.h"
 //END-UPDATES
 
 namespace blink {
 
 float NavigatorDeviceMemory::deviceMemory() const {
 //START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-            blink::switches::kCustomNavigatorDeviceMemory)) {
-    std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorDeviceMemory);
-    int value;
-    base::StringToInt(str, &value);
-    return value;
+  if (base::CustomDevice::GetInstance()->HasDict("navigator")) {
+    return base::CustomDevice::GetInstance()->GetNavigatorFloatProp(
+      "deviceMemory",
+      ApproximatedDeviceMemory::GetApproximatedDeviceMemory()
+    );
   }
 //END-UPDATES
   return ApproximatedDeviceMemory::GetApproximatedDeviceMemory();

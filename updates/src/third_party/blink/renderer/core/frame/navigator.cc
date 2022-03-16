@@ -68,11 +68,11 @@ String Navigator::platform() const {
   if (!DomWindow())
     return NavigatorBase::platform();
 //START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-        blink::switches::kCustomNavigatorPlatform)) {
-    std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorPlatform);
-    return str.data();
-  }
+//  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+//        blink::switches::kCustomNavigatorPlatform)) {
+//    std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorPlatform);
+//    return str.data();
+//  }
 //END-UPDATES
   const String& platform_override =
       DomWindow()->GetFrame()->GetSettings()->GetNavigatorPlatformOverride();

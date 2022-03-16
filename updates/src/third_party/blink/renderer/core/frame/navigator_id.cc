@@ -36,9 +36,7 @@
 #include "third_party/blink/public/common/features.h"
 #include "third_party/blink/renderer/platform/wtf/text/string_builder.h"
 //START-UPDATES
-#include "third_party/blink/public/common/switches.h"
-#include "base/command_line.h"
-#include "base/strings/utf_string_conversions.h"
+#include "base/custom_device.h"
 //END-UPDATES
 
 #if !BUILDFLAG(IS_MAC) && !BUILDFLAG(IS_WIN)
@@ -65,10 +63,9 @@ String NavigatorID::appVersion() {
 
 String NavigatorID::platform() const {
 //START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-            blink::switches::kCustomNavigatorPlatform)) {
-    std::string str = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomNavigatorPlatform);
-    return str.data();
+  const std::string platform = base::CustomDevice::GetInstance()->GetNavigatorPlatform();
+  if (!platform.empty()) {
+    return platform.data();
   }
 //END-UPDATES
 #if BUILDFLAG(IS_MAC)

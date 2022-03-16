@@ -26,7 +26,7 @@ const copy = require("../utils/copy");
     },
     {
         name: 'Copy chromium',
-        fn: () => {
+        fn: async () => {
           await copy(configPath.chromiumPath + '/src', configPath.buildPath + '/src');
         }
     },

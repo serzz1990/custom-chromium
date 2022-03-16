@@ -17,8 +17,7 @@
 #include "third_party/blink/renderer/core/execution_context/execution_context.h"
 #include "third_party/blink/renderer/core/page/page.h"
 //START-UPDATES
-#include "third_party/blink/public/common/switches.h"
-#include "base/command_line.h"
+#include "base/custom_device.h"
 //END-UPDATES
 
 namespace blink {
@@ -70,14 +69,12 @@ void NavigatorUAData::AddBrandFullVersion(const String& brand,
 void NavigatorUAData::SetBrandVersionList(
     const UserAgentBrandList& brand_version_list) {
 //START-UPDATES
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          blink::switches::kCustomChromeVersion)) {
-      std::string chromeVersion = base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(blink::switches::kCustomChromeVersion);
-
-      AddBrandVersion("Chromium", chromeVersion.data());
-      AddBrandVersion("Google Chrome", chromeVersion.data());
-      AddBrandVersion(" Not A;Brand", "99");
-      return;
+  const std::string majorVersion = base::CustomDevice::GetInstance()->GetChromeMajorVersion();
+  if (!majorVersion.empty()) {
+    AddBrandVersion(" Not A;Brand", "99");
+    AddBrandVersion("Chromium", majorVersion.data());
+    AddBrandVersion("Google Chrome", majorVersion.data());
+    return;
   }
 //END-UPDATES
   for (const auto& brand_version : brand_version_list) {
@@ -99,6 +96,14 @@ void NavigatorUAData::SetMobile(bool mobile) {
 }
 
 void NavigatorUAData::SetPlatform(const String& brand, const String& version) {
+//START-UPDATES
+  const std::string navigatorPlatform = base::CustomDevice::GetInstance()->GetNavigatorPlatform();
+  if (!navigatorPlatform.empty()) {
+    platform_ = navigatorPlatform.data();
+    platform_version_ = version;
+    return;
+  }
+//END-UPDATES
   platform_ = brand;
   platform_version_ = version;
 }
