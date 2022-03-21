@@ -42,7 +42,7 @@ The goal of the project is to completely fake the fingerprint of any device with
   - [x] [navigator.vendor](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/navigator.vendor)
   - [ ] [webgl.vendor](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/webgl.vendor)
   - [ ] [window.outerdimensions](https://github.com/berstend/puppeteer-extra/blob/master/packages/puppeteer-extra-plugin-stealth/evasions/window.outerdimensions)
-  - [ ] matchMedia
+  - [x] matchMedia here: "third_party/blink/renderer/core/css/media_values.cc"
   - [ ] fonts
   - [ ] WebRTC
   - [ ] css computed style colors / fonts

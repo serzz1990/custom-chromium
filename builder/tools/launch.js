@@ -8,6 +8,7 @@ module.exports = async function () {
   const browser = await puppeteer.launch({
     executablePath: path.join(configPath.outPath, configDist.platforms[process.platform].executablePath),
     devtools: false,
+    dumpio: true,
     headless: false,
     defaultViewport: null,
     args: [
