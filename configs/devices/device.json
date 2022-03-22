@@ -18,5 +18,28 @@
     "vendorSub": "",
     "product": "Gecko",
     "productSub": "20030107"
+  },
+  "fonts": {
+    "MS Gothic": {
+      "offsetWidth": 7,
+      "offsetHeight": 2,
+      "style": "oblique",
+      "weight": "normal",
+      "size": 11
+    },
+    "Gabriola": {
+      "offsetWidth": 5,
+      "offsetHeight": 2,
+      "style": "oblique",
+      "weight": "bold",
+      "size": 2
+    },
+    "Times": {
+      "offsetWidth": 6,
+      "offsetHeight": 1,
+      "style": "italic",
+      "weight": "normal",
+      "size": 3
+    }
   }
 }

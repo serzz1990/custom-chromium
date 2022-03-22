@@ -17,6 +17,6 @@ module.exports = async function () {
     ]
   });
 
-  // const page = await browser.newPage();
-  // await page.goto('https://abrahamjuliot.github.io/creepjs/');
+  const page = await browser.newPage();
+  await page.goto('https://abrahamjuliot.github.io/creepjs/');
 }

@@ -19,6 +19,7 @@ class BASE_EXPORT CustomDevice {
 
     bool HasJSON() const;
     bool HasDict(std::string dictKey) const;
+    bool HasFont(std::string dictKey) const;
 
     ~CustomDevice();
 

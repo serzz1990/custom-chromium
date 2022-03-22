@@ -34,25 +34,29 @@ The goal of the project is to completely fake the fingerprint of any device with
 
 ## TODO LIST ✓
   - [x] create one json with all params
-  - [ ] change patching chrome
+  - [x] matchMedia here: "third_party/blink/renderer/core/css/media_values.cc"
+  - [x] fonts
+  - [x] [navigator.vendor](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/navigator.vendor)
   - [ ] [media.codecs](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/media.codecs)
   - [ ] [navigator.languages](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/navigator.languages)
   - [ ] [navigator.permissions](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/navigator.permissions)
   - [ ] [navigator.plugins](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/navigator.plugins)
-  - [x] [navigator.vendor](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/navigator.vendor)
   - [ ] [webgl.vendor](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/webgl.vendor)
   - [ ] [window.outerdimensions](https://github.com/berstend/puppeteer-extra/blob/master/packages/puppeteer-extra-plugin-stealth/evasions/window.outerdimensions)
-  - [x] matchMedia here: "third_party/blink/renderer/core/css/media_values.cc"
-  - [ ] fonts
   - [ ] WebRTC
   - [ ] css computed style colors / fonts
   - [ ] keyboard
   - [ ] mimeTypes
   - [ ] audio
   - [ ] emoji
+  - [ ] [fingerprintjs fonts](https://github.com/fingerprintjs/fingerprintjs/blob/master/src/sources/fonts.ts)
   - [ ] [chrome.app](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/chrome.app)
   - [ ] [chrome.csi](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/chrome.csi)
   - [ ] [chrome.runtime](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/chrome.runtime)
   - [ ] [iframe.contentWindow](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/iframe.contentWindow)
   - [ ] [navigator.webdriver](https://github.com/berstend/puppeteer-extra/tree/master/packages/puppeteer-extra-plugin-stealth/evasions/navigator.webdriver)
   - [ ] collect device descriptor
+  - [ ] change patching chrome
+
+
+getFontFaceLoadFonts(getFontList

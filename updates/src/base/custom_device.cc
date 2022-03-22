@@ -36,12 +36,9 @@ bool CustomDevice::HasDict(std::string dictKey) const {
     const auto* res = JSON->FindKey(dictKey);
     if (res && res->is_dict()) {
       return true;
-    } else {
-      return false;
     }
-  } else {
-    return false;
   }
+  return false;
 }
 
 void CustomDevice::Load() {
@@ -123,6 +120,17 @@ std::string CustomDevice::GetChromeMajorVersion() const {
     }
   }
   return "";
+}
+
+bool CustomDevice::HasFont(std::string fontName) const {
+  if (HasJSON()) {
+    const auto* res = JSON->FindKey("fonts");
+    if (res && res->is_dict()) {
+      const auto* font = res->FindKey(fontName);
+      return font && font->is_dict();
+    }
+  }
+  return false;
 }
 
 }  // namespace base
