@@ -9,7 +9,6 @@
     "launch": "node ./builder/cmd/launch.js",
     "build": "node ./builder/cmd/build.js",
     "gen": "node ./builder/cmd/gen.js",
-    "watch": "node ./builder/cmd/watch.js",
     "dist": "node ./builder/cmd/dist.js"
   },
   "author": "",
