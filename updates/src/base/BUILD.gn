@@ -39,6 +39,7 @@ import("//build/timestamp.gni")
 import("//build_overrides/build.gni")
 import("//testing/libfuzzer/fuzzer_test.gni")
 import("//testing/test.gni")
+import("//third_party/icu/config.gni")
 
 if (is_mac) {
   # Used to generate fuzzer corpus :base_mach_port_rendezvous_convert_corpus.
@@ -98,23 +99,28 @@ if (is_fuchsia) {
   import("//third_party/fuchsia-sdk/sdk/build/fidl_library.gni")
 }
 
-# TODO(crbug.com/1280708, crbug.com/1304707): Drop toolchain_has_rust after we
-# have support for all our toolchains: NaCl, Linux x86, etc.
-build_rust_json_parser = enable_rust && toolchain_has_rust
+# TODO(crbug.com/1280708): Switch to enable_rust after we have NaCl support.
+build_rust_json_parser = toolchain_has_rust
 
 buildflag_header("parsing_buildflags") {
   header = "parsing_buildflags.h"
   flags = [ "BUILD_RUST_JSON_PARSER=$build_rust_json_parser" ]
 }
 
-# TODO(crbug.com/1298039): The BUILDFLAG should be used instead. So
-# buildflag_header() should generate a Rust config (and perhaps a Rust crate
-# which depends on said config, so its usage can be expressed via deps).
-config("todo_buildflag_build_rust_json_parser") {
-  rustflags = [
-    "--cfg",
-    "buildflag__build_rust_json_parser",
-  ]
+config("memory_tagging") {
+  if (current_cpu == "arm64" && is_clang &&
+      (is_linux || is_chromeos || is_android || is_fuchsia)) {
+    # base/ has access to the MTE intrinsics because it needs to use them,
+    # but they're not backwards compatible. Use base::CPU::has_mte()
+    # beforehand to confirm or use indirect functions (ifuncs) to select
+    # an MTE-specific implementation at dynamic link-time.
+    cflags = [
+      "-Xclang",
+      "-target-feature",
+      "-Xclang",
+      "+mte",
+    ]
+  }
 }
 
 config("base_implementation") {
@@ -1083,8 +1089,6 @@ mixed_component("base") {
       "win/core_winrt_util.cc",
       "win/core_winrt_util.h",
       "win/current_module.h",
-      "win/default_apps_util.cc",
-      "win/default_apps_util.h",
       "win/embedded_i18n/language_selector.cc",
       "win/embedded_i18n/language_selector.h",
       "win/enum_variant.cc",
@@ -1265,6 +1269,8 @@ mixed_component("base") {
       "profiler/module_cache_mac.cc",
       "profiler/native_unwinder_apple.cc",
       "profiler/native_unwinder_apple.h",
+      "profiler/native_unwinder_mac.cc",
+      "profiler/native_unwinder_mac.h",
       "profiler/stack_sampler_mac.cc",
       "profiler/suspendable_thread_delegate_mac.cc",
       "profiler/suspendable_thread_delegate_mac.h",
@@ -1338,6 +1344,8 @@ mixed_component("base") {
       "debug/proc_maps_linux.cc",
       "debug/proc_maps_linux.h",
       "files/dir_reader_linux.h",
+      "files/file_path_watcher_linux.cc",
+      "files/file_path_watcher_linux.h",
       "files/file_util_linux.cc",
       "files/scoped_file_linux.cc",
       "process/internal_linux.cc",
@@ -1348,13 +1356,6 @@ mixed_component("base") {
       "process/process_linux.cc",
       "process/process_metrics_linux.cc",
       "threading/platform_thread_linux.cc",
-    ]
-  }
-
-  if (is_linux || is_chromeos || is_android || is_fuchsia) {
-    sources += [
-      "files/file_path_watcher_inotify.cc",
-      "files/file_path_watcher_inotify.h",
     ]
   }
 
@@ -1411,6 +1412,7 @@ mixed_component("base") {
 
   configs += [
     ":base_implementation",
+    ":memory_tagging",
     "//build/config:precompiled_headers",
     "//build/config/compiler:wglobal_constructors",
   ]
@@ -1430,19 +1432,16 @@ mixed_component("base") {
   # module, to avoid increasing Chrome's executable size.
   assert_no_deps = [ ":native_unwinder_android" ]
 
-  rs_crate_root = "base.rs"
-  rs_sources = [ "base.rs" ]
-
   if (build_rust_json_parser) {
-    # TODO(crbug.com/1298039): The BUILDFLAG should be used instead.
-    rs_configs = [ ":todo_buildflag_build_rust_json_parser" ]
+    rs_crate_root = "lib.rs"
     rs_deps = [
       "//third_party/rust/serde/v1:lib",
-      "//third_party/rust/serde_json_lenient/v0_1:lib",
+      "//third_party/rust/serde_jsonrc/v0_1:lib",
     ]
-    rs_sources += [
+    rs_sources = [
       "json/json_parser.rs",
       "json/mod.rs",
+      "lib.rs",
       "rs_glue/mod.rs",
       "values.rs",
       "values_deserialization.rs",
@@ -1494,14 +1493,10 @@ mixed_component("base") {
     sources += [
       "allocator/allocator_shim.cc",
       "allocator/allocator_shim.h",
+      "allocator/allocator_shim_default_dispatch_to_partition_alloc.cc",
+      "allocator/allocator_shim_default_dispatch_to_partition_alloc.h",
       "allocator/allocator_shim_internals.h",
     ]
-    if (use_partition_alloc) {
-      sources += [
-        "allocator/allocator_shim_default_dispatch_to_partition_alloc.cc",
-        "allocator/allocator_shim_default_dispatch_to_partition_alloc.h",
-      ]
-    }
     if (is_android) {
       sources += [
         "allocator/allocator_shim_override_cpp_symbols.h",
@@ -1573,7 +1568,8 @@ mixed_component("base") {
 
   # Allow more direct string conversions on platforms with native utf8
   # strings
-  if (is_apple || is_chromeos || is_chromecast || is_fuchsia) {
+  # TODO(crbug/1052397): Consider replacing is_ash with is_chromeos once lacros switches to target_os=chromeos
+  if (is_apple || is_chromeos_ash || is_chromecast || is_fuchsia) {
     defines += [ "SYSTEM_NATIVE_UTF8" ]
   }
 
@@ -1677,6 +1673,7 @@ mixed_component("base") {
       "android/task_scheduler/post_task_android.h",
       "android/task_scheduler/task_runner_android.cc",
       "android/task_scheduler/task_runner_android.h",
+      "android/time_utils.cc",
       "android/timezone_utils.cc",
       "android/timezone_utils.h",
       "android/trace_event_binding.cc",
@@ -1691,6 +1688,8 @@ mixed_component("base") {
       "debug/elf_reader.h",
       "debug/proc_maps_linux.cc",
       "debug/proc_maps_linux.h",
+      "files/file_path_watcher_linux.cc",
+      "files/file_path_watcher_linux.h",
       "power_monitor/power_monitor_device_source_android.cc",
       "process/internal_linux.cc",
       "process/internal_linux.h",
@@ -1764,6 +1763,7 @@ mixed_component("base") {
       "files/file_descriptor_watcher_posix.cc",
       "files/file_descriptor_watcher_posix.h",
       "files/file_enumerator_posix.cc",
+      "files/file_path_watcher_fuchsia.cc",
       "files/file_posix.cc",
       "files/file_util_fuchsia.cc",
       "files/file_util_posix.cc",
@@ -1994,14 +1994,125 @@ mixed_component("base") {
         "allocator/partition_alloc_features.h",
         "allocator/partition_alloc_support.cc",
         "allocator/partition_alloc_support.h",
+        "allocator/partition_allocator/address_pool_manager.cc",
+        "allocator/partition_allocator/address_pool_manager.h",
+        "allocator/partition_allocator/address_pool_manager_bitmap.cc",
+        "allocator/partition_allocator/address_pool_manager_bitmap.h",
+        "allocator/partition_allocator/address_pool_manager_types.h",
+        "allocator/partition_allocator/address_space_randomization.cc",
+        "allocator/partition_allocator/address_space_randomization.h",
+        "allocator/partition_allocator/address_space_stats.h",
+        "allocator/partition_allocator/allocation_guard.cc",
+        "allocator/partition_allocator/allocation_guard.h",
+        "allocator/partition_allocator/dangling_raw_ptr_checks.cc",
+        "allocator/partition_allocator/dangling_raw_ptr_checks.h",
+        "allocator/partition_allocator/extended_api.cc",
+        "allocator/partition_allocator/extended_api.h",
+        "allocator/partition_allocator/memory_reclaimer.cc",
+        "allocator/partition_allocator/memory_reclaimer.h",
+        "allocator/partition_allocator/oom.cc",
+        "allocator/partition_allocator/oom.h",
+        "allocator/partition_allocator/oom_callback.cc",
+        "allocator/partition_allocator/oom_callback.h",
+        "allocator/partition_allocator/page_allocator.cc",
+        "allocator/partition_allocator/page_allocator.h",
+        "allocator/partition_allocator/page_allocator_constants.h",
+        "allocator/partition_allocator/page_allocator_internal.h",
+        "allocator/partition_allocator/partition_address_space.cc",
+        "allocator/partition_allocator/partition_address_space.h",
+        "allocator/partition_allocator/partition_alloc-inl.h",
+        "allocator/partition_allocator/partition_alloc.cc",
+        "allocator/partition_allocator/partition_alloc.h",
+        "allocator/partition_allocator/partition_alloc_check.h",
+        "allocator/partition_allocator/partition_alloc_config.h",
+        "allocator/partition_allocator/partition_alloc_constants.h",
+        "allocator/partition_allocator/partition_alloc_forward.h",
+        "allocator/partition_allocator/partition_alloc_hooks.cc",
+        "allocator/partition_allocator/partition_alloc_hooks.h",
+        "allocator/partition_allocator/partition_alloc_notreached.h",
+        "allocator/partition_allocator/partition_bucket.cc",
+        "allocator/partition_allocator/partition_bucket.h",
+        "allocator/partition_allocator/partition_bucket_lookup.h",
+        "allocator/partition_allocator/partition_cookie.h",
+        "allocator/partition_allocator/partition_direct_map_extent.h",
+        "allocator/partition_allocator/partition_freelist_entry.h",
+        "allocator/partition_allocator/partition_lock.h",
+        "allocator/partition_allocator/partition_oom.cc",
+        "allocator/partition_allocator/partition_oom.h",
+        "allocator/partition_allocator/partition_page.cc",
+        "allocator/partition_allocator/partition_page.h",
+        "allocator/partition_allocator/partition_ref_count.h",
+        "allocator/partition_allocator/partition_root.cc",
+        "allocator/partition_allocator/partition_root.h",
+        "allocator/partition_allocator/partition_stats.cc",
+        "allocator/partition_allocator/partition_stats.h",
+        "allocator/partition_allocator/partition_tls.h",
+        "allocator/partition_allocator/random.cc",
+        "allocator/partition_allocator/random.h",
+        "allocator/partition_allocator/reservation_offset_table.cc",
+        "allocator/partition_allocator/reservation_offset_table.h",
+        "allocator/partition_allocator/spinning_mutex.cc",
+        "allocator/partition_allocator/spinning_mutex.h",
+        "allocator/partition_allocator/starscan/logging.h",
+        "allocator/partition_allocator/starscan/metadata_allocator.cc",
+        "allocator/partition_allocator/starscan/metadata_allocator.h",
+        "allocator/partition_allocator/starscan/pcscan.cc",
+        "allocator/partition_allocator/starscan/pcscan.h",
+        "allocator/partition_allocator/starscan/pcscan_internal.cc",
+        "allocator/partition_allocator/starscan/pcscan_internal.h",
+        "allocator/partition_allocator/starscan/pcscan_scheduling.cc",
+        "allocator/partition_allocator/starscan/pcscan_scheduling.h",
+        "allocator/partition_allocator/starscan/raceful_worklist.h",
+        "allocator/partition_allocator/starscan/scan_loop.h",
+        "allocator/partition_allocator/starscan/snapshot.cc",
+        "allocator/partition_allocator/starscan/snapshot.h",
+        "allocator/partition_allocator/starscan/stack/stack.cc",
+        "allocator/partition_allocator/starscan/stack/stack.h",
+        "allocator/partition_allocator/starscan/starscan_fwd.h",
+        "allocator/partition_allocator/starscan/state_bitmap.h",
+        "allocator/partition_allocator/starscan/stats_collector.cc",
+        "allocator/partition_allocator/starscan/stats_collector.h",
+        "allocator/partition_allocator/starscan/stats_reporter.h",
+        "allocator/partition_allocator/starscan/write_protector.cc",
+        "allocator/partition_allocator/starscan/write_protector.h",
+        "allocator/partition_allocator/tagging.cc",
+        "allocator/partition_allocator/tagging.h",
+        "allocator/partition_allocator/thread_cache.cc",
+        "allocator/partition_allocator/thread_cache.h",
+        "allocator/partition_allocator/yield_processor.h",
       ]
-    }
+      if (is_win) {
+        sources += [
+          "allocator/partition_allocator/page_allocator_internals_win.h",
+          "allocator/partition_allocator/partition_tls_win.cc",
+        ]
+      } else if (is_posix) {
+        sources += [
+          "allocator/partition_allocator/page_allocator_internals_posix.cc",
+          "allocator/partition_allocator/page_allocator_internals_posix.h",
+        ]
+      } else if (is_fuchsia) {
+        sources += [
+          "allocator/partition_allocator/page_allocator_internals_fuchsia.h",
+        ]
+      }
 
-    # Need this to pass gn check, because gn check doesn't see
-    # BUILDFLAG(USE_PARTITION_ALLOC). A linker will remove all
-    # partition_alloc code if use_partition_alloc = false because no code uses
-    # partition_alloc.
-    public_deps += [ "allocator/partition_allocator:partition_alloc" ]
+      if (current_cpu == "x64") {
+        defines += [ "PA_PCSCAN_STACK_SUPPORTED" ]
+        sources += [ "allocator/partition_allocator/starscan/stack/asm/x64/push_registers_asm.cc" ]
+      } else if (current_cpu == "x86") {
+        defines += [ "PA_PCSCAN_STACK_SUPPORTED" ]
+        sources += [ "allocator/partition_allocator/starscan/stack/asm/x86/push_registers_asm.cc" ]
+      } else if (current_cpu == "arm") {
+        defines += [ "PA_PCSCAN_STACK_SUPPORTED" ]
+        sources += [ "allocator/partition_allocator/starscan/stack/asm/arm/push_registers_asm.cc" ]
+      } else if (current_cpu == "arm64") {
+        defines += [ "PA_PCSCAN_STACK_SUPPORTED" ]
+        sources += [ "allocator/partition_allocator/starscan/stack/asm/arm64/push_registers_asm.cc" ]
+      } else {
+        # To support a trampoline for another arch, please refer to v8/src/heap/base.
+      }
+    }
   }
 
   # Windows.
@@ -2417,13 +2528,6 @@ mixed_component("base") {
         "trace_event/trace_event_android.cc",
       ]
     }
-
-    if (use_allocator == "partition") {
-      sources += [
-        "trace_event/address_space_dump_provider.cc",
-        "trace_event/address_space_dump_provider.h",
-      ]
-    }
   } else {
     sources += [
       "trace_event/trace_event_stub.cc",
@@ -2663,13 +2767,6 @@ component("i18n") {
     configs += [ "//build/config/compiler:optimize_max" ]
   }
 
-  if (is_chromeos_lacros) {
-    sources += [
-      "i18n/icu_mergeable_data_file.cc",
-      "i18n/icu_mergeable_data_file.h",
-    ]
-  }
-
   if (is_mac) {
     frameworks = [ "CoreFoundation.framework" ]
   }
@@ -2716,10 +2813,6 @@ test("base_perftests") {
   if (is_android) {
     deps += [ "//testing/android/native_test:native_test_native_code" ]
     shard_timeout = 600
-  }
-  if (is_fuchsia) {
-    # TODO(crbug.com/1306335): Switch to CFv2 once infrastructure supports it.
-    use_cfv2 = false
   }
 
   if (!is_official_build) {
@@ -3289,21 +3382,8 @@ test("base_unittests") {
     "vlog_unittest.cc",
   ]
 
-  # TODO(crbug.com/1304253): iOS test() targets don't support mixing Rust code
-  # yet.
-  if (!is_ios) {
-    rs_sources = []
-
-    if (build_rust_json_parser) {
-      # TODO(crbug.com/1298039): The BUILDFLAG should be used instead.
-      rs_configs = [ ":todo_buildflag_build_rust_json_parser" ]
-      rs_sources += [
-        "json/json_parser_unittest.rs",
-        "values_unittest.rs",
-      ]
-
-      sources -= [ "json/json_parser_unittest.cc" ]
-    }
+  if (build_rust_json_parser) {
+    sources -= [ "json/json_parser_unittest.cc" ]
   }
 
   defines = []
@@ -3327,12 +3407,6 @@ test("base_unittests") {
     "//testing/gtest",
     "//third_party/icu",
   ]
-
-  # TODO(crbug.com/1304253): iOS test() targets don't support mixing Rust code
-  # yet.
-  if (!is_ios) {
-    rs_deps = [ ":base" ]
-  }
 
   data_deps = [
     "//base/test:immediate_crash_test_helper",
@@ -3479,7 +3553,8 @@ test("base_unittests") {
 
   # Allow more direct string conversions on platforms with native utf8
   # strings
-  if (is_apple || is_chromeos || is_chromecast || is_fuchsia) {
+  # TODO(crbug/1052397): Consider replacing is_ash with is_chromeos once lacros switches to target_os=chromeos
+  if (is_apple || is_chromeos_ash || is_chromecast || is_fuchsia) {
     defines += [ "SYSTEM_NATIVE_UTF8" ]
   }
 
@@ -3556,6 +3631,15 @@ test("base_unittests") {
       ":base_java_unittest_support",
       "//base/test:test_support_java",
     ]
+  }
+
+  if (icu_use_data_file) {
+    if (is_android) {
+      deps += [ "//third_party/icu:icu_extra_assets" ]
+    } else {
+      deps += [ "//third_party/icu:extra_icudata" ]
+      data += [ "$root_out_dir/icudtl_extra.dat" ]
+    }
   }
 
   if (is_ios) {
@@ -3658,10 +3742,6 @@ test("base_unittests") {
     }
   }
 
-  if (is_chromeos_lacros) {
-    sources += [ "i18n/icu_mergeable_data_file_unittest.cc" ]
-  }
-
   if (is_linux || is_chromeos_lacros) {
     sources += [
       "linux_util_unittest.cc",
@@ -3699,6 +3779,9 @@ test("base_unittests") {
       "posix/file_descriptor_shuffle_unittest.cc",
       "task/thread_pool/task_tracker_posix_unittest.cc",
     ]
+
+    # TODO(crbug.com/851641): FilePatchWatcherImpl is not implemented.
+    sources -= [ "files/file_path_watcher_unittest.cc" ]
 
     deps += [
       ":test_interface_impl",
@@ -3809,6 +3892,8 @@ test("base_unittests") {
     ]
     deps += [ "//build/rust:cxx_cppdeps" ]
   }
+
+  configs += [ ":memory_tagging" ]
 }
 
 action("build_date") {
@@ -3895,6 +3980,7 @@ if (is_android) {
       "android/java/src/org/chromium/base/RadioUtils.java",
       "android/java/src/org/chromium/base/SysUtils.java",
       "android/java/src/org/chromium/base/ThreadUtils.java",
+      "android/java/src/org/chromium/base/TimeUtils.java",
       "android/java/src/org/chromium/base/TimezoneUtils.java",
       "android/java/src/org/chromium/base/TraceEvent.java",
       "android/java/src/org/chromium/base/UnguessableToken.java",
@@ -4027,7 +4113,6 @@ if (is_android) {
       "android/java/src/org/chromium/base/annotations/CalledByNative.java",
       "android/java/src/org/chromium/base/annotations/CalledByNativeUnchecked.java",
       "android/java/src/org/chromium/base/annotations/CheckDiscard.java",
-      "android/java/src/org/chromium/base/annotations/DoNotClassMerge.java",
       "android/java/src/org/chromium/base/annotations/DoNotInline.java",
       "android/java/src/org/chromium/base/annotations/IdentifierNameString.java",
       "android/java/src/org/chromium/base/annotations/JNIAdditionalImport.java",
@@ -4037,6 +4122,17 @@ if (is_android) {
       "android/java/src/org/chromium/base/annotations/MockedInTests.java",
       "android/java/src/org/chromium/base/annotations/NativeClassQualifiedName.java",
       "android/java/src/org/chromium/base/annotations/UsedByReflection.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnLollipop.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnLollipopMR1.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnM.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnN.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnNMR1.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnO.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnOMR1.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnP.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnQ.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnR.java",
+      "android/java/src/org/chromium/base/annotations/VerifiesOnS.java",
       "android/java/src/org/chromium/base/compat/ApiHelperForM.java",
       "android/java/src/org/chromium/base/compat/ApiHelperForN.java",
       "android/java/src/org/chromium/base/compat/ApiHelperForO.java",
@@ -4155,6 +4251,7 @@ if (is_android) {
       # AssertsTest doesn't really belong in //base but it's preferable to
       # stick it here than create another target for a single test.
       "android/javatests/src/org/chromium/base/AdvancedMockContextTest.java",
+      "android/javatests/src/org/chromium/base/ApiCompatibilityUtilsTest.java",
       "android/javatests/src/org/chromium/base/AssertsTest.java",
       "android/javatests/src/org/chromium/base/CommandLineFlagsTest.java",
       "android/javatests/src/org/chromium/base/CommandLineInitUtilTest.java",
@@ -4245,7 +4342,6 @@ if (is_android) {
       "test/android/javatests/src/org/chromium/base/test/task/SchedulerTestHelpers.java",
       "test/android/javatests/src/org/chromium/base/test/task/ThreadPoolTestHelpers.java",
       "test/android/javatests/src/org/chromium/base/test/util/AdvancedMockContext.java",
-      "test/android/javatests/src/org/chromium/base/test/util/AndroidSdkLevelSkipCheck.java",
       "test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
       "test/android/javatests/src/org/chromium/base/test/util/AnnotationRule.java",
       "test/android/javatests/src/org/chromium/base/test/util/ApplicationContextWrapper.java",
@@ -4260,7 +4356,6 @@ if (is_android) {
       "test/android/javatests/src/org/chromium/base/test/util/DisableIf.java",
       "test/android/javatests/src/org/chromium/base/test/util/DisableIfSkipCheck.java",
       "test/android/javatests/src/org/chromium/base/test/util/DisabledTest.java",
-      "test/android/javatests/src/org/chromium/base/test/util/DoNotRevive.java",
       "test/android/javatests/src/org/chromium/base/test/util/EnormousTest.java",
       "test/android/javatests/src/org/chromium/base/test/util/Feature.java",
       "test/android/javatests/src/org/chromium/base/test/util/FlakyTest.java",
@@ -4272,9 +4367,9 @@ if (is_android) {
       "test/android/javatests/src/org/chromium/base/test/util/LooperUtils.java",
       "test/android/javatests/src/org/chromium/base/test/util/Manual.java",
       "test/android/javatests/src/org/chromium/base/test/util/Matchers.java",
-      "test/android/javatests/src/org/chromium/base/test/util/MaxAndroidSdkLevel.java",
       "test/android/javatests/src/org/chromium/base/test/util/MetricsUtils.java",
       "test/android/javatests/src/org/chromium/base/test/util/MinAndroidSdkLevel.java",
+      "test/android/javatests/src/org/chromium/base/test/util/MinAndroidSdkLevelSkipCheck.java",
       "test/android/javatests/src/org/chromium/base/test/util/PayloadCallbackHelper.java",
       "test/android/javatests/src/org/chromium/base/test/util/RequiresRestart.java",
       "test/android/javatests/src/org/chromium/base/test/util/Restriction.java",
@@ -4372,11 +4467,11 @@ if (is_android) {
       "test/android/junit/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactoryTest.java",
       "test/android/junit/src/org/chromium/base/test/params/ParameterizedRunnerTest.java",
       "test/android/junit/src/org/chromium/base/test/params/ParameterizedTestNameTest.java",
-      "test/android/junit/src/org/chromium/base/test/util/AndroidSdkLevelSkipCheckTest.java",
       "test/android/junit/src/org/chromium/base/test/util/AnnotationProcessingUtilsTest.java",
       "test/android/junit/src/org/chromium/base/test/util/CommandLineFlagsNoClassAnnotationCheckTest.java",
       "test/android/junit/src/org/chromium/base/test/util/CommandLineFlagsWithClassAnnotationCheckTest.java",
       "test/android/junit/src/org/chromium/base/test/util/DisableIfTest.java",
+      "test/android/junit/src/org/chromium/base/test/util/MinAndroidSdkLevelSkipCheckTest.java",
       "test/android/junit/src/org/chromium/base/test/util/RestrictionSkipCheckTest.java",
       "test/android/junit/src/org/chromium/base/test/util/SkipCheckTest.java",
     ]

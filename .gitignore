@@ -2,6 +2,7 @@ depot_tools
 node_modules
 chromium
 build
+_build
 temp
 .idea
 .DS_Store
